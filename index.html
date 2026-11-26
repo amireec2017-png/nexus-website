@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>نيكسوس للبرامج المحاسبية</title>
+<meta name="description" content="نيكسوس: برامج محاسبية للشركات، حسابات عامة، مخازن، رواتب ونقاط بيع.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ===== الألوان (مؤقتة لحد ما نعرف ألوان نيكسوس الحقيقية) ===== */
+:root{
+  --bg:#f6f8fb; --surface:#ffffff; --text:#0f1b2d; --muted:#5b6b80;
+  --primary:#0b5cad; --primary-ink:#ffffff; --accent:#12a38a;
+  --border:#e2e8f0; --hero-from:#0b2a4f; --hero-to:#0b5cad;
+  --shadow:0 6px 24px rgba(15,27,45,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b1220; --surface:#121b2d; --text:#e6edf7; --muted:#9aabc2;
+    --primary:#4c9cf0; --primary-ink:#06101f; --accent:#2dd4b0;
+    --border:#22304a; --hero-from:#071426; --hero-to:#0d3a6e;
+    --shadow:0 6px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b1220; --surface:#121b2d; --text:#e6edf7; --muted:#9aabc2;
+  --primary:#4c9cf0; --primary-ink:#06101f; --accent:#2dd4b0;
+  --border:#22304a; --hero-from:#071426; --hero-to:#0d3a6e;
+  --shadow:0 6px 24px rgba(0,0,0,.35);
+}
+
+/* ===== أساسيات ===== */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Cairo",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.8}
+a{color:inherit;text-decoration:none}
+.container{width:min(1120px,100% - 32px);margin-inline:auto}
+section{padding:72px 0}
+h2{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800;margin-bottom:8px}
+.lead{color:var(--muted);margin-bottom:36px;max-width:640px}
+.btn{display:inline-block;padding:12px 26px;border-radius:10px;font-weight:700;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-ghost{border:2px solid rgba(255,255,255,.6);color:#fff}
+.tag{font-size:.75rem;background:#fff3cd;color:#7a5b00;padding:2px 8px;border-radius:6px;font-weight:600}
+
+/* ===== الهيدر ===== */
+header{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--border)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.3rem}
+.logo-mark{width:38px;height:38px;border-radius:10px;background:var(--primary);color:var(--primary-ink);display:grid;place-items:center;font-weight:800}
+.links{display:flex;gap:28px;font-weight:600}
+.links a:hover{color:var(--primary)}
+.menu-btn{display:none;background:none;border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 12px;font:inherit;cursor:pointer}
+
+/* ===== الواجهة (Hero) ===== */
+.hero{background:linear-gradient(135deg,var(--hero-from),var(--hero-to));color:#fff;padding:96px 0}
+.hero h1{font-size:clamp(1.9rem,5vw,3.2rem);font-weight:800;line-height:1.4;margin-bottom:16px}
+.hero p{font-size:1.15rem;opacity:.9;max-width:620px;margin-bottom:32px}
+.hero .actions{display:flex;gap:14px;flex-wrap:wrap}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px;max-width:620px}
+.stats div{background:rgba(255,255,255,.08);border-radius:12px;padding:16px;text-align:center}
+.stats strong{display:block;font-size:1.6rem}
+
+/* ===== الكروت ===== */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px;box-shadow:var(--shadow)}
+.card .icon{font-size:2rem;margin-bottom:10px}
+.card h3{font-size:1.2rem;margin-bottom:6px}
+.card p{color:var(--muted)}
+.card ul{margin-top:12px;padding-inline-start:18px;color:var(--muted)}
+
+/* ===== الأسعار ===== */
+.price{font-size:2rem;font-weight:800;color:var(--primary);margin:8px 0}
+.price small{font-size:.9rem;color:var(--muted);font-weight:600}
+.card.featured{border:2px solid var(--primary)}
+.card .btn{margin-top:18px;background:var(--primary);color:var(--primary-ink);width:100%;text-align:center}
+
+/* ===== التواصل ===== */
+form{display:grid;gap:14px;max-width:560px}
+input,textarea,select{font:inherit;padding:12px 14px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text)}
+form button{border:none;cursor:pointer;font:inherit}
+.form-msg{color:var(--accent);font-weight:700;display:none}
+
+footer{background:var(--surface);border-top:1px solid var(--border);padding:28px 0;color:var(--muted);text-align:center}
+
+/* ===== الموبايل ===== */
+@media (max-width:760px){
+  .links{display:none;position:absolute;top:68px;inset-inline:0;background:var(--surface);flex-direction:column;padding:16px;gap:14px;border-bottom:1px solid var(--border)}
+  .links.open{display:flex}
+  .menu-btn{display:block}
+  .stats{grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .stats strong{font-size:1.2rem}
+  section{padding:56px 0}
+}
+</style>
+</head>
+<body>
+
+<!-- الهيدر وقائمة التنقل -->
+<header>
+  <div class="container nav">
+    <a href="#home" class="logo"><span class="logo-mark">N</span> نيكسوس</a>
+    <nav class="links" id="links">
+      <a href="#products">المنتجات</a>
+      <a href="#features">المميزات</a>
+      <a href="#pricing">الأسعار</a>
+      <a href="#contact">تواصل معنا</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="القائمة">☰</button>
+  </div>
+</header>
+
+<!-- الواجهة الرئيسية -->
+<section class="hero" id="home">
+  <div class="container">
+    <h1>نيكسوس.. حساباتك كلها<br>في مكان واحد</h1>
+    <p>برامج محاسبية مصممة للشركات العربية: قيود يومية، مخازن، رواتب، فواتير إلكترونية، وتقارير مالية جاهزة بضغطة زر.</p>
+    <div class="actions">
+      <a href="#contact" class="btn btn-primary">اطلب نسخة تجريبية مجانًا</a>
+      <a href="#products" class="btn btn-ghost">تعرّف على المنتجات</a>
+    </div>
+    <div class="stats">
+      <div><strong>+500</strong>عميل <span class="tag">مثال</span></div>
+      <div><strong>+10</strong>سنوات خبرة <span class="tag">مثال</span></div>
+      <div><strong>24/7</strong>دعم فني</div>
+    </div>
+  </div>
+</section>
+
+<!-- المنتجات (أسماء مؤقتة) -->
+<section id="products">
+  <div class="container">
+    <h2>منتجاتنا</h2>
+    <p class="lead">أسماء المنتجات وتفاصيلها هنا مؤقتة <span class="tag">محتاجين البيانات الحقيقية</span></p>
+    <div class="grid">
+      <article class="card">
+        <div class="icon">📒</div>
+        <h3>نيكسوس للحسابات العامة</h3>
+        <p>دليل حسابات مرن، قيود يومية، ميزان مراجعة، وقوائم مالية.</p>
+        <ul><li>مراكز تكلفة</li><li>تعدد العملات</li><li>إقفال الفترات</li></ul>
+      </article>
+      <article class="card">
+        <div class="icon">📦</div>
+        <h3>نيكسوس للمخازن</h3>
+        <p>متابعة الأصناف والكميات وتكلفة المخزون لحظة بلحظة.</p>
+        <ul><li>متوسط مرجح / FIFO</li><li>تعدد المخازن</li><li>حد إعادة الطلب</li></ul>
+      </article>
+      <article class="card">
+        <div class="icon">👥</div>
+        <h3>نيكسوس للرواتب وشؤون العاملين</h3>
+        <p>حساب المرتبات والتأمينات والضرائب وكشوف الحضور.</p>
+        <ul><li>التأمينات الاجتماعية</li><li>ضريبة كسب العمل</li><li>السلف والجزاءات</li></ul>
+      </article>
+      <article class="card">
+        <div class="icon">🧾</div>
+        <h3>نيكسوس نقاط البيع والفواتير</h3>
+        <p>كاشير سريع وفواتير إلكترونية متوافقة مع منظومة الضرائب.</p>
+        <ul><li>الفاتورة والإيصال الإلكتروني</li><li>باركود</li><li>تقارير المبيعات</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- المميزات -->
+<section id="features" style="background:var(--surface)">
+  <div class="container">
+    <h2>ليه نيكسوس؟</h2>
+    <p class="lead">معمول بإيد محاسبين عارفين احتياجات الشغل الحقيقي.</p>
+    <div class="grid">
+      <div class="card"><div class="icon">⚡</div><h3>سهل وسريع</h3><p>واجهة عربية بسيطة، تتعلمها في يوم.</p></div>
+      <div class="card"><div class="icon">📊</div><h3>تقارير جاهزة</h3><p>قائمة الدخل، المركز المالي، والتدفقات النقدية فورًا.</p></div>
+      <div class="card"><div class="icon">🔒</div><h3>آمن</h3><p>صلاحيات لكل مستخدم ونسخ احتياطي تلقائي.</p></div>
+      <div class="card"><div class="icon">☁️</div><h3>من أي مكان</h3><p>شغّل البرنامج على جهازك أو أونلاين.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- الأسعار (أرقام مؤقتة) -->
+<section id="pricing">
+  <div class="container">
+    <h2>الباقات والأسعار</h2>
+    <p class="lead">الأسعار دي أمثلة بس <span class="tag">محتاجين الأسعار الحقيقية</span></p>
+    <div class="grid">
+      <div class="card">
+        <h3>الأساسية</h3>
+        <div class="price">0000 <small>ج.م / سنويًا</small></div>
+        <p>مستخدم واحد، الحسابات العامة.</p>
+        <a href="#contact" class="btn">اطلب الباقة</a>
+      </div>
+      <div class="card featured">
+        <h3>المتقدمة ⭐</h3>
+        <div class="price">0000 <small>ج.م / سنويًا</small></div>
+        <p>5 مستخدمين، حسابات + مخازن + فواتير.</p>
+        <a href="#contact" class="btn">اطلب الباقة</a>
+      </div>
+      <div class="card">
+        <h3>الشركات</h3>
+        <div class="price">حسب الطلب</div>
+        <p>كل المنتجات، مستخدمين بلا حدود، تدريب ودعم مخصص.</p>
+        <a href="#contact" class="btn">كلمنا</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- التواصل -->
+<section id="contact" style="background:var(--surface)">
+  <div class="container">
+    <h2>تواصل معنا</h2>
+    <p class="lead">سيب بياناتك وهنكلمك نحدد معاد للعرض التجريبي. <span class="tag">الفورم لسه مش متوصل بإيميل</span></p>
+    <form id="contactForm">
+      <input required placeholder="الاسم">
+      <input required type="tel" placeholder="رقم الموبايل" dir="rtl">
+      <input placeholder="اسم الشركة">
+      <select>
+        <option>المنتج اللي مهتم بيه</option>
+        <option>الحسابات العامة</option>
+        <option>المخازن</option>
+        <option>الرواتب</option>
+        <option>نقاط البيع والفواتير</option>
+      </select>
+      <textarea rows="4" placeholder="رسالتك"></textarea>
+      <button class="btn btn-primary" type="submit">إرسال</button>
+      <p class="form-msg" id="formMsg">شكرًا! هنتواصل معاك قريب ✅</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="container">© <span id="year"></span> نيكسوس للبرامج المحاسبية. كل الحقوق محفوظة.</div>
+</footer>
+
+<script>
+// فتح وقفل القائمة على الموبايل
+const menuBtn = document.getElementById('menuBtn');
+const links = document.getElementById('links');
+menuBtn.addEventListener('click', () => links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+// الفورم: حاليًا بيعرض رسالة شكر بس (لسه مش بيبعت لحد)
+document.getElementById('contactForm').addEventListener('submit', e => {
+  e.preventDefault();
+  document.getElementById('formMsg').style.display = 'block';
+  e.target.reset();
+});
+
+// سنة حقوق النشر تتحدث لوحدها
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
